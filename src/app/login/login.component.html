@@ -1,0 +1,24 @@
+
+<div class="container login-page">
+  <div class="form">
+  <div class="login">
+    <div class="login-header">
+      <h3>LOGIN</h3>
+      <p>Please enter your credentials to login.</p>
+    </div>
+  </div>
+	<form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+		<div class="form-group">
+      <input type="email" class="form-control" formControlName="username" placeholder="Enter username">
+    </div>
+
+    <div class="form-group">
+      <input type="password" class="form-control" formControlName="password" placeholder="Password">
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Submit</button>
+  </form>
+</div>
+</div>
+<!-- <div *ngIf="submitted">
+<app-products></app-products>
+</div> -->
