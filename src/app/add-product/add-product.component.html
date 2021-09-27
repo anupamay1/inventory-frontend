@@ -5,13 +5,13 @@
 <mat-dialog-content [formGroup]="form">
     <mat-form-field>
       <input matInput
-                placeholder="Product Id"
+                placeholder="Product Id *"
                formControlName="productId">
     </mat-form-field>
 
     <mat-form-field>
       <input matInput
-                placeholder="Product Name"
+                placeholder="Product Name *"
                formControlName="productName">
     </mat-form-field>
     <mat-form-field>
@@ -27,7 +27,7 @@
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput placeholder="Product Units" type="number"
+      <input matInput placeholder="Product Units" type="number" min="0"
           formControlName="units">
   </mat-form-field>
 
@@ -41,7 +41,7 @@
         Close
     </button>
 
-    <button class="mat-raised-button mat-primary"
+    <button class="mat-raised-button mat-primary saveButton" [disabled]="!form.valid"
             (click)="save()">
         Save
     </button>

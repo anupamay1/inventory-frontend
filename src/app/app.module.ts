@@ -22,6 +22,8 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatIconModule } from '@angular/material/icon';
 import { EditProductComponent } from './edit-product/edit-product.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { EditProductComponent } from './edit-product/edit-product.component';
     LoginComponent,
     ProductsComponent,
     AddProductComponent,
-    EditProductComponent
+    EditProductComponent,
+    AlertDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +51,8 @@ import { EditProductComponent } from './edit-product/edit-product.component';
     MatSortModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent],

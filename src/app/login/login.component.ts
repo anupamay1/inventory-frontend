@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormControl, Validators, FormArray } from '@ang
 import { Router } from '@angular/router';
 import { User } from '../models/User';
 import { AuthenticationService} from '../services/authentication-service.service';
+import {MatSnackBar,MatSnackBarHorizontalPosition,MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -12,8 +13,14 @@ import { AuthenticationService} from '../services/authentication-service.service
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  submitted:boolean = false;
-  constructor(private authenticationService: AuthenticationService,private router: Router) {
+  submitted: boolean = false;
+  invalidUser: boolean = false;
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+  durationInSeconds = 5;
+
+
+  constructor(private authenticationService: AuthenticationService,private router: Router,private _snackBar: MatSnackBar) {
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
@@ -35,8 +42,21 @@ export class LoginComponent implements OnInit {
       .subscribe(
           data => {
               console.log("Welcome user"+data);
+              sessionStorage.setItem('currentUser', data);
+              this.router.navigate(['/products']);
               this.submitted = true;
+          },
+          error =>{
+            console.log(error);
+            this.invalidUser = true;
+           this.router.navigate(['/login']);
+           this._snackBar.open('Invalid username and password !!', ' ', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+            duration: this.durationInSeconds * 1000,
+            panelClass: ['snackbar']
           });
-  this.router.navigate(['/products']);
+          });
+
   }
 }

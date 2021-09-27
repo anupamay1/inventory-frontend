@@ -1,7 +1,7 @@
 <div class="conatiner" style="margin: 20px;">
   <div class="row" style="display: flex;">
     <span class="col-mod-6"><h2>INVENTORY</h2></span>
-    <span class="col-mod-6" style="transform: translateX(1295px);"><button mat-raised-button class="btn btn-primary" (click)="logout()">Logout</button></span>
+    <span class="col-mod-6" style="transform: translateX(1295px);"><button mat-raised-button class="btn btn-primary logoutButton" (click)="logout()">Logout</button></span>
   </div>
   <div class="mat-elevation-z8">
     <mat-form-field appearance="standard">
@@ -22,8 +22,8 @@
        <ng-container matColumnDef="Actions">
         <th mat-header-cell *matHeaderCellDef> Actions </th>
         <td mat-cell *matCellDef="let element">
-          <mat-icon (click)="editProduct(element)">edit</mat-icon>
-          <mat-icon (click)="deleteProduct(element.productId)">delete</mat-icon>
+          <mat-icon class="matIcon" (click)="editProduct(element)">edit</mat-icon>
+          <mat-icon class="matIcon" (click)="deleteProduct(element.productId)">delete</mat-icon>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>

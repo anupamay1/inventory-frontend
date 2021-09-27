@@ -24,9 +24,9 @@ export class AddProductComponent implements OnInit {
     this.form = this.fb.group({
       productId: [this.product.productId, Validators.required],
       productName: [this.product.productName, Validators.required],
-      productCategory: [this.product.productCategory, Validators.required],
-      productDescription: [this.product.productDescription, Validators.required],
-      units: [this.product.units, Validators.required],
+      productCategory: [this.product.productCategory],
+      productDescription: [this.product.productDescription],
+      units: [this.product.units, [Validators.required,Validators.min(0)]],
   });
   }
   save() {

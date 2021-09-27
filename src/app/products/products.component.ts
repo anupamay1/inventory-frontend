@@ -8,6 +8,7 @@ import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import { AddProductComponent } from '../add-product/add-product.component';
 import { EditProductComponent } from '../edit-product/edit-product.component';
 import { AuthenticationService } from '../services/authentication-service.service';
+import { AlertDialogComponent } from '../alert-dialog/alert-dialog.component';
 import { Router } from '@angular/router';
 
 @Component({
@@ -74,6 +75,7 @@ export class ProductsComponent implements OnInit {
 
   getAllProduct(){
     this.productList = [];
+    console.log("all----"+this.productList);
     this.productService.getAllProduct().subscribe(
       data =>{
         data.forEach(x =>{
@@ -98,7 +100,7 @@ export class ProductsComponent implements OnInit {
 
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
-        dialogConfig.maxWidth = '800px';
+        dialogConfig.width = '300px';
         dialogConfig.data = {
           id: 1,
           title: 'Add New Product'
@@ -127,9 +129,24 @@ export class ProductsComponent implements OnInit {
   }
 
   deleteProduct(productId:String){
-    this.productService.deleteProducts(productId).subscribe(data =>{
-      console.log(data);
-      this.ngOnInit();
+    const dialogRef = this.dialog.open(AlertDialogComponent,{
+      data:{
+        message: 'Are you sure want to delete?',
+        buttonText: {
+          ok: 'Yes',
+          cancel: 'No'
+        }
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+      if (confirmed) {
+        this.productService.deleteProducts(productId).subscribe(data =>{
+          console.log(data);
+          this.ngOnInit();
+        });
+
+      }
     });
   }
 
@@ -138,7 +155,7 @@ export class ProductsComponent implements OnInit {
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.maxWidth = '800px';
+    dialogConfig.width = '300px';
     dialogConfig.data = {
       id: 1,
       product: editProduct

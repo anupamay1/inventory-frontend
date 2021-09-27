@@ -11,7 +11,7 @@ export class ProductsService {
   private httpOptions:any;
 
   constructor(private http:HttpClient) {
-    var token = JSON.parse(sessionStorage.getItem('currentUser'));
+    var token = sessionStorage.getItem('currentUser');
     var headers_object = new HttpHeaders({
       'Content-Type': 'application/json',
        'Authorization': "Bearer "+ token

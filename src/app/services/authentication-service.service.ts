@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { User } from '../models/User'
 import { Observable } from 'rxjs';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -16,7 +15,8 @@ export class AuthenticationService{
     return this.http.post(`${this.apiUrl}/authenticate`,user,{ responseType: 'text' })
         .pipe(map(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            sessionStorage.setItem('currentUser', JSON.stringify(user));
+            console.log("usrr",user);
+            sessionStorage.setItem('currentUser', user);
             return user;
         }));
 }
