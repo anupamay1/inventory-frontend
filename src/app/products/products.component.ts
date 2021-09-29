@@ -20,6 +20,8 @@ export class ProductsComponent implements OnInit {
   public productList : Array<Product> = [];
   public product : Product;
   public dataSource = new MatTableDataSource<Product>(this.productList);
+  public allUniqueCategories: Array<String> = [];
+  public selectedCategory:String="";
   edit:boolean = true;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -83,6 +85,12 @@ export class ProductsComponent implements OnInit {
         });
         // console.log(this.productList);
         this.dataSource.data = this.productList;
+        this.productList.forEach(product =>{
+          if(!this.allUniqueCategories.includes(product.productCategory)){
+            this.allUniqueCategories.push(product.productCategory);
+          }
+        });
+        console.log(this.allUniqueCategories);
       }
     );
   }
@@ -180,6 +188,25 @@ export class ProductsComponent implements OnInit {
         }
     );
 
+  }
+
+  filterByCategory(category:String){
+    console.log(category);
+    this.selectedCategory = category;
+    if(this.selectedCategory!="Clear" && this.selectedCategory!=""){
+      var products = [];
+      for(let product of this.productList){
+        if(product.productCategory == category){
+           products.push(product);
+        }
+      }
+      this.dataSource.data = products;
+    }
+    else if(this.selectedCategory=="Clear" || this.selectedCategory==""){
+      this.selectedCategory = "";
+      this.dataSource.data = this.productList;
+      console.log(this.productList);
+    }
   }
 
   logout(){

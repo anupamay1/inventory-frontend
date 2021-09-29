@@ -9,6 +9,13 @@
       <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
     </mat-form-field>
     <button class="addProductButton" mat-raised-button (click)="openDialog()">Add New Product</button>
+    <mat-form-field class="categorySelect" appearance="fill">
+      <mat-label>Choose one category</mat-label>
+      <mat-select (selectionChange)="filterByCategory(selectedCategory)" [(ngModel)]="selectedCategory">
+        <mat-option value="Clear">Clear</mat-option>
+        <mat-option *ngFor="let i of allUniqueCategories" [value]="i">{{i}}</mat-option>
+      </mat-select>
+    </mat-form-field>
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container *ngFor="let column of columns;let i = index" [matColumnDef]="column.columnDef">

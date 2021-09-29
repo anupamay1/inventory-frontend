@@ -46,3 +46,8 @@ th.mat-sort-header-sorted {
 
   background-color:#328f8a !important;
 }
+.categorySelect{
+  width: 13% !important;
+  float: right;
+  margin-right: 18px;
+}
