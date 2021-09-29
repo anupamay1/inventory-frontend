@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { User } from '../models/User';
 import { AuthenticationService} from '../services/authentication-service.service';
 import {MatSnackBar,MatSnackBarHorizontalPosition,MatSnackBarVerticalPosition} from '@angular/material/snack-bar';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import { SignUpComponent } from '../sign-up/sign-up.component';
 
 
 @Component({
@@ -13,14 +15,15 @@ import {MatSnackBar,MatSnackBarHorizontalPosition,MatSnackBarVerticalPosition} f
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  submitted: boolean = false;
-  invalidUser: boolean = false;
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   durationInSeconds = 5;
+  user: User = new User('','');
 
 
-  constructor(private authenticationService: AuthenticationService,private router: Router,private _snackBar: MatSnackBar) {
+  constructor(private authenticationService: AuthenticationService,
+    private router: Router,private _snackBar: MatSnackBar, public dialog: MatDialog) {
+
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
@@ -44,13 +47,11 @@ export class LoginComponent implements OnInit {
               console.log("Welcome user"+data);
               sessionStorage.setItem('currentUser', data);
               this.router.navigate(['/products']);
-              this.submitted = true;
           },
           error =>{
             console.log(error);
-            this.invalidUser = true;
-           this.router.navigate(['/login']);
-           this._snackBar.open('Invalid username and password !!', ' ', {
+            this.router.navigate(['/login']);
+            this._snackBar.open('Invalid username and password !!', ' ', {
             horizontalPosition: this.horizontalPosition,
             verticalPosition: this.verticalPosition,
             duration: this.durationInSeconds * 1000,
@@ -58,5 +59,49 @@ export class LoginComponent implements OnInit {
           });
           });
 
+  }
+
+  signUp(){
+    const dialogConfig = new MatDialogConfig();
+
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        dialogConfig.data = {
+          id: 1,
+          title: 'Sign Up'
+      };
+
+        const dialogRef = this.dialog.open(SignUpComponent, dialogConfig);
+
+        dialogRef.afterClosed().subscribe(
+            data => {
+              console.log("Dialog output:", data);
+              this.user = data;
+              console.log("user",this.user);
+             if(data!=undefined){
+              this.authenticationService.saveUser(this.user).subscribe(
+                data => {
+                  this.authenticationService.login(data).subscribe(
+                    data => {
+                      console.log("Welcome user"+data);
+                      sessionStorage.setItem('currentUser', data);
+                      this.router.navigate(['/products']);
+                    }
+                  )
+                },
+                error=>{
+                  console.log(error);
+                  this.router.navigate(['/login']);
+                  this._snackBar.open('User Already exists !!', ' ', {
+                  horizontalPosition: this.horizontalPosition,
+                  verticalPosition: this.verticalPosition,
+                  duration: this.durationInSeconds * 1000,
+                  panelClass: ['snackbar']
+                   });
+                }
+              );
+             }
+            }
+        );
   }
 }

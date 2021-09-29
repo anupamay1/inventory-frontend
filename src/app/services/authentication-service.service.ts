@@ -26,4 +26,14 @@ logout() {
     sessionStorage.removeItem('currentUser');
 }
 
+saveUser(user: User): Observable<User> {
+  return this.http.post<User>(`${this.apiUrl}/addUser`,user)
+        .pipe(map(user => {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            console.log("usrr",user);
+            this.login(user);
+            return user;
+        }));
+}
+
 }

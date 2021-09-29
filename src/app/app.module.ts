@@ -24,6 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { EditProductComponent } from './edit-product/edit-product.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
     ProductsComponent,
     AddProductComponent,
     EditProductComponent,
-    AlertDialogComponent
+    AlertDialogComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +58,6 @@ import { AlertDialogComponent } from './alert-dialog/alert-dialog.component';
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent],
-  entryComponents: [AddProductComponent, EditProductComponent]
+  entryComponents: [AddProductComponent, EditProductComponent, SignUpComponent]
 })
 export class AppModule { }

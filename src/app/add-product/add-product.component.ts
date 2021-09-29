@@ -26,7 +26,7 @@ export class AddProductComponent implements OnInit {
       productName: [this.product.productName, Validators.required],
       productCategory: [this.product.productCategory],
       productDescription: [this.product.productDescription],
-      units: [this.product.units, [Validators.required,Validators.min(0)]],
+      units: [this.product.units, [Validators.required,Validators.min(0)]]
   });
   }
   save() {
